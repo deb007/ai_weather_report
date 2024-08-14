@@ -124,7 +124,7 @@ def generate_ai_summary(weather_summary):
             },
             {
                 "role": "user",
-                "content": f"Summarize this weather report in a friendly, conversational tone: {weather_summary}",
+                "content": f"Summarize this weather report in a friendly, conversational tone. Use emoticons as much as possible: {weather_summary}",
             },
         ],
     )
