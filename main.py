@@ -193,11 +193,31 @@ def summarize_weather(
 
 
 def generate_ai_summary(weather_summary):
+    import json
+    import random
+
+    with open("readers.json", "r") as file:
+        data = json.load(file)
+
+    # Get the list of weather readers
+    weather_readers = data["weather_readers"]
+    selected_reader = random.choice(weather_readers)
+    name = selected_reader["name"]
+    affiliation = selected_reader["affiliation"]
+    country = selected_reader["country"]
+    usp = selected_reader["usp"]
+
     # Azure OpenAI configuration
     client = AzureOpenAI(
         azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
         api_version="2024-02-01",
+    )
+    prompt = (
+        f"Summarize this weather report in a friendly, conversational tone as if by {name},"
+        f" a renowned weather presenter from {affiliation} in {country}. "
+        f"{name} is known for {usp}."
+        f"Use emoticons as much as possible: {weather_summary} "
     )
 
     response = client.chat.completions.create(
@@ -205,16 +225,21 @@ def generate_ai_summary(weather_summary):
         messages=[
             {
                 "role": "system",
-                "content": "YYou are a helpful assistant who is an expert in summarizing weather reports.",
+                "content": "You are a helpful assistant who is an expert in summarizing weather reports.",
             },
             {
                 "role": "user",
-                "content": f"Summarize this weather report in a friendly, conversational tone. Use emoticons as much as possible: {weather_summary}",
+                "content": prompt,
             },
         ],
     )
+    res = (
+        f"AI-generated summary:\nPersonality used today: {name} from {affiliation} in {country}\n"
+        f"{usp}.\n\n"
+        f"{response.choices[0].message.content}"
+    )
 
-    return response.choices[0].message.content
+    return res
 
 
 def send_email(receiver_emails, subject, body):
@@ -250,7 +275,7 @@ def process_weather_request(weather_request: WeatherRequest):
         )
         ai_summary = generate_ai_summary(weather_summary)
         full_report += (
-            f"{weather_summary}\n\nAI-generated summary:\n{ai_summary}\n\n{'='*50}\n\n"
+            f"{ai_summary}\n\n{'='*50}\n\nAPI Information:\n{weather_summary}\n\n"
         )
 
     subject = f"Weather Report - {datetime.now(pytz.timezone(weather_request.timezone)).strftime('%Y-%m-%d')}"

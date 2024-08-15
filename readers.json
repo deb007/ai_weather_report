@@ -1,0 +1,94 @@
+{
+    "weather_readers": [
+        {
+            "name": "Al Roker",
+            "affiliation": "NBC's Today Show",
+            "country": "USA",
+            "usp": "Long-time weather anchor and TV personality, known for his engaging presentation style."
+        },
+        {
+            "name": "Carol Kirkwood",
+            "affiliation": "BBC Breakfast",
+            "country": "UK",
+            "usp": "Popular BBC weather presenter known for her warmth and professionalism."
+        },
+        {
+            "name": "Ginger Zee",
+            "affiliation": "ABC News",
+            "country": "USA",
+            "usp": "Chief Meteorologist known for her expertise and live coverage of extreme weather events."
+        },
+        {
+            "name": "David Brown",
+            "affiliation": "Seven News",
+            "country": "Australia",
+            "usp": "Respected Australian meteorologist known for his detailed weather forecasts."
+        },
+        {
+            "name": "Yanet García",
+            "affiliation": "Televisa Monterrey",
+            "country": "Mexico",
+            "usp": "Gained international fame for her engaging and energetic weather presentations."
+        },
+        {
+            "name": "Jim Cantore",
+            "affiliation": "The Weather Channel",
+            "country": "USA",
+            "usp": "Known for on-the-ground coverage of major weather events, especially hurricanes."
+        },
+        {
+            "name": "Laura Tobin",
+            "affiliation": "Good Morning Britain",
+            "country": "UK",
+            "usp": "Popular weather presenter known for her in-depth meteorological knowledge."
+        },
+        {
+            "name": "Sam Champion",
+            "affiliation": "ABC’s Good Morning America",
+            "country": "USA",
+            "usp": "Former weather anchor known for his approachable style and environmental advocacy."
+        },
+        {
+            "name": "John Coleman",
+            "affiliation": "The Weather Channel",
+            "country": "USA",
+            "usp": "Original weatherman on Good Morning America and co-founder of The Weather Channel."
+        },
+        {
+            "name": "Dallas Raines",
+            "affiliation": "KABC-TV",
+            "country": "USA",
+            "usp": "Charismatic meteorologist known for his lively weather presentations in Los Angeles."
+        },
+        {
+            "name": "Anand Narasimhan",
+            "affiliation": "CNN-IBN",
+            "country": "India",
+            "usp": "Well-known weather presenter and news anchor with a strong on-screen presence."
+        },
+        {
+            "name": "Mausami Singh",
+            "affiliation": "India Today Group",
+            "country": "India",
+            "usp": "Journalist known for her detailed weather reports and field coverage."
+        },
+        {
+            "name": "Anant Tyagi",
+            "affiliation": "Star Sports, NDTV",
+            "country": "India",
+            "usp": "Known for his versatile presentation skills in both weather and sports broadcasting."
+        },
+        {
+            "name": "Padma Shri Dr. D. Sivananda Pai",
+            "affiliation": "IMD",
+            "country": "India",
+            "usp": "Renowned meteorologist recognized for his contributions to long-range weather forecasting."
+        },
+        {
+            "name": "Priyanka Kishore",
+            "affiliation": "DD National, All India Radio",
+            "country": "India",
+            "usp": "Experienced weather presenter known for her clear and concise weather reports."
+        }
+    ]
+}
