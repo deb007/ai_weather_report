@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from openai import AzureOpenAI
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To
-from datetime import datetime, timedelta
+from datetime import datetime
 import pytz
 
 # Load environment variables

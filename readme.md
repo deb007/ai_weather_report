@@ -91,7 +91,7 @@ Generate a weather report for specified locations and preferences.
 
 - `locations`: List of locations, each with `city` and `country`
 - `preferences`: Weather data preferences (temperature, humidity, wind_speed, cloudiness)
-- `receiver_email`: Email address to receive the weather report
+- `receiver_emails`: Email address to receive the weather report
 
 #### Response
 
