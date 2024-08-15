@@ -217,6 +217,7 @@ def generate_ai_summary(weather_summary):
         f"Summarize this weather report in a friendly, conversational tone as if by {name},"
         f" a renowned weather presenter from {affiliation} in {country}. "
         f"{name} is known for {usp}."
+        f"Always generate in English language ONLY."
         f"Use emoticons as much as possible: {weather_summary} "
     )
 
