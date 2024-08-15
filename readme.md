@@ -74,7 +74,8 @@ Before you begin, ensure you have met the following requirements:
        "wind_speed": false,
        "cloudiness": true
      },
-     "receiver_email": "user@example.com"
+     "receiver_emails": ["user@example.com"],
+     "timezone": "Asia/Kolkata"
    }
    ```
 
