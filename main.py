@@ -259,6 +259,166 @@ def send_email(receiver_emails, subject, body):
     except Exception as e:
         print(f"Error sending email: {e}")
 
+def generate_html_ui(weather_summary):
+    """Generate HTML UI for weather report based on the weather summary."""
+    current_weather = weather_summary['current_weather']
+    forecast = weather_summary['forecast']
+    
+    # Helper function to create forecast card
+    def create_forecast_card(day_data):
+        return f'''
+            <div class="forecast-day">
+                <div class="day">{day_data['day']}</div>
+                <div class="weather-icon">
+                    <img src="path_to_icons/{day_data['icon']}.svg" alt="{day_data['description']}">
+                </div>
+                <div class="temp">{day_data['temp']}°C</div>
+                <div class="description">{day_data['description']}</div>
+            </div>
+        '''
+
+    html = f'''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather Report - {weather_summary['location']}</title>
+        <style>
+            :root {{
+                --primary-color: #1a73e8;
+                --text-color: #202124;
+                --secondary-text: #5f6368;
+                --background: #ffffff;
+                --card-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            }}
+            
+            body {{
+                font-family: 'Segoe UI', Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f0f5ff;
+                color: var(--text-color);
+            }}
+            
+            .weather-card {{
+                background: var(--background);
+                border-radius: 12px;
+                padding: 24px;
+                max-width: 800px;
+                margin: 0 auto;
+                box-shadow: var(--card-shadow);
+            }}
+            
+            .location {{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }}
+            
+            .current-weather {{
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 20px;
+                margin-bottom: 30px;
+            }}
+            
+            .temperature {{
+                font-size: 48px;
+                font-weight: 400;
+            }}
+            
+            .weather-details {{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                margin: 20px 0;
+            }}
+            
+            .detail-item {{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }}
+            
+            .forecast {{
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 16px;
+                margin-top: 30px;
+                text-align: center;
+            }}
+            
+            .forecast-day {{
+                padding: 12px;
+                border-radius: 8px;
+                background: #f8f9fa;
+            }}
+            
+            .air-quality {{
+                color: {current_weather['air_quality_color']};
+                font-weight: 500;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="weather-card">
+            <div class="location">
+                <div>
+                    <h2>{weather_summary['location']}</h2>
+                </div>
+                <div>{current_weather['timestamp']}</div>
+            </div>
+            
+            <div class="current-weather">
+                <div class="temperature">
+                    {current_weather['temperature']}°C
+                    <div style="font-size: 16px;">{current_weather['description']}</div>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <span>Feels Like</span>
+                        <span>{current_weather['feels_like']}°C</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Humidity</span>
+                        <span>{current_weather['humidity']}%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Wind</span>
+                        <span>{current_weather['wind_speed']} m/s</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Air Quality</span>
+                        <span class="air-quality">{current_weather['air_quality']}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Sunrise</span>
+                        <span>{current_weather['sunrise']}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Sunset</span>
+                        <span>{current_weather['sunset']}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
+            <div class="ai-summary" style="padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 24px; line-height: 1.5;">
+                {weather_summary['ai_summary']}
+            </div>
+            
+            <div class="forecast">
+                {''.join(create_forecast_card(day) for day in forecast)}
+            </div>
+        </div>
+    </body>
+    </html>
+    '''
+    
+    return html
 
 def process_weather_request(weather_request: WeatherRequest):
     full_report = ""
@@ -274,10 +434,31 @@ def process_weather_request(weather_request: WeatherRequest):
             weather_request.preferences,
             weather_request.timezone,
         )
-        ai_summary = generate_ai_summary(weather_summary)
-        full_report += (
-            f"{ai_summary}\n\n{'='*50}\n\nAPI Information:\n{weather_summary}\n\n"
-        )
+        weather_summary_dict = {
+            'location': f"{location.city}, {location.country}",
+            'current_weather': {
+                'temperature': current_data["main"]["temp"],
+                'feels_like': current_data["main"]["feels_like"],
+                'humidity': current_data["main"]["humidity"],
+                'wind_speed': current_data["wind"]["speed"],
+                'air_quality': pollution_data["list"][0]["main"]["aqi"],
+                'air_quality_color': 'green' if pollution_data["list"][0]["main"]["aqi"] < 3 else 'red',
+                'description': current_data["weather"][0]["description"],
+                'timestamp': datetime.fromtimestamp(current_data["dt"]).strftime('%Y-%m-%d %H:%M:%S'),
+                'sunrise': datetime.fromtimestamp(current_data["sys"]["sunrise"]).strftime('%H:%M'),
+                'sunset': datetime.fromtimestamp(current_data["sys"]["sunset"]).strftime('%H:%M'),
+            },
+            'forecast': [
+                {
+                    'day': datetime.fromtimestamp(forecast["dt"]).strftime('%Y-%m-%d'),
+                    'temp': forecast["main"]["temp"],
+                    'icon': forecast["weather"][0]["icon"],
+                    'description': forecast["weather"][0]["description"],
+                } for forecast in forecast_data["list"][::8]
+            ],
+            'ai_summary': generate_ai_summary(weather_summary),
+        }
+        full_report += generate_html_ui(weather_summary_dict)
 
     subject = f"Weather Report - {datetime.now(pytz.timezone(weather_request.timezone)).strftime('%Y-%m-%d')}"
     send_email(weather_request.receiver_emails, subject, full_report)
