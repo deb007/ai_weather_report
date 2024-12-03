@@ -209,9 +209,9 @@ def generate_ai_summary(weather_summary):
 
     # Azure OpenAI configuration
     client = AzureOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        api_version="2024-02-01",
+        api_version="2024-02-15-preview",
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
     )
     prompt = (
         f"Summarize this weather report in a friendly, conversational tone as if by {name},"
@@ -244,13 +244,13 @@ def generate_ai_summary(weather_summary):
 
 
 def send_email(receiver_emails, subject, body):
-    print("Email body:")
+    print("Sending email...")
     print(body)
     message = Mail(
         from_email=SENDER_EMAIL,
         to_emails=[To(email) for email in receiver_emails],
         subject=subject,
-        plain_text_content=body,
+        html_content=body,
     )
     try:
         sg = SendGridAPIClient(SENDGRID_API_KEY)
@@ -259,21 +259,32 @@ def send_email(receiver_emails, subject, body):
     except Exception as e:
         print(f"Error sending email: {e}")
 
+
 def generate_html_ui(weather_summary):
     """Generate HTML UI for weather report based on the weather summary."""
     current_weather = weather_summary['current_weather']
     forecast = weather_summary['forecast']
     
+    # Weather icons using Unicode/emoji
+    icons = {
+        'clear': '☀️',
+        'feels_like': '🌡️',
+        'humidity': '💧',
+        'wind': '🌬️',
+        'sunrise': '🌅',
+        'sunset': '🌇',
+        'air_quality': '😷',
+        'ai': '🤖'
+    }
+
     # Helper function to create forecast card
     def create_forecast_card(day_data):
         return f'''
-            <div class="forecast-day">
-                <div class="day">{day_data['day']}</div>
-                <div class="weather-icon">
-                    <img src="path_to_icons/{day_data['icon']}.svg" alt="{day_data['description']}">
-                </div>
-                <div class="temp">{day_data['temp']}°C</div>
-                <div class="description">{day_data['description']}</div>
+            <div style="padding: 12px; background: #f8f9fa; border-radius: 8px; text-align: center; margin: 8px;">
+                <div style="font-weight: 500; margin-bottom: 8px;">{day_data['day']}</div>
+                <div style="font-size: 24px; margin: 8px 0;">{icons['clear']}</div>
+                <div style="font-size: 18px; margin: 8px 0;">{day_data['temp']}°C</div>
+                <div style="color: #666;">{day_data['description']}</div>
             </div>
         '''
 
@@ -284,121 +295,51 @@ def generate_html_ui(weather_summary):
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Weather Report - {weather_summary['location']}</title>
-        <style>
-            :root {{
-                --primary-color: #1a73e8;
-                --text-color: #202124;
-                --secondary-text: #5f6368;
-                --background: #ffffff;
-                --card-shadow: 0 1px 3px rgba(0,0,0,0.12);
-            }}
-            
-            body {{
-                font-family: 'Segoe UI', Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-                background-color: #f0f5ff;
-                color: var(--text-color);
-            }}
-            
-            .weather-card {{
-                background: var(--background);
-                border-radius: 12px;
-                padding: 24px;
-                max-width: 800px;
-                margin: 0 auto;
-                box-shadow: var(--card-shadow);
-            }}
-            
-            .location {{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
-            }}
-            
-            .current-weather {{
-                display: grid;
-                grid-template-columns: auto 1fr;
-                gap: 20px;
-                margin-bottom: 30px;
-            }}
-            
-            .temperature {{
-                font-size: 48px;
-                font-weight: 400;
-            }}
-            
-            .weather-details {{
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-                margin: 20px 0;
-            }}
-            
-            .detail-item {{
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }}
-            
-            .forecast {{
-                display: grid;
-                grid-template-columns: repeat(5, 1fr);
-                gap: 16px;
-                margin-top: 30px;
-                text-align: center;
-            }}
-            
-            .forecast-day {{
-                padding: 12px;
-                border-radius: 8px;
-                background: #f8f9fa;
-            }}
-            
-            .air-quality {{
-                color: {current_weather['air_quality_color']};
-                font-weight: 500;
-            }}
-        </style>
     </head>
-    <body>
-        <div class="weather-card">
-            <div class="location">
+    <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f5ff; color: #202124;">
+        <div style="background: white; border-radius: 12px; padding: 24px; max-width: 800px; margin: 0 auto; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <div>
-                    <h2>{weather_summary['location']}</h2>
+                    <h2 style="margin: 0;">{weather_summary['location']}</h2>
                 </div>
                 <div>{current_weather['timestamp']}</div>
             </div>
             
-            <div class="current-weather">
-                <div class="temperature">
+            <div style="margin-bottom: 30px;">
+                <div style="font-size: 48px; font-weight: 400; display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 36px;">{icons['clear']}</span>
                     {current_weather['temperature']}°C
                     <div style="font-size: 16px;">{current_weather['description']}</div>
                 </div>
                 
-                <div class="weather-details">
-                    <div class="detail-item">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 20px 0;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['feels_like']}</span>
                         <span>Feels Like</span>
                         <span>{current_weather['feels_like']}°C</span>
                     </div>
-                    <div class="detail-item">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['humidity']}</span>
                         <span>Humidity</span>
                         <span>{current_weather['humidity']}%</span>
                     </div>
-                    <div class="detail-item">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['wind']}</span>
                         <span>Wind</span>
                         <span>{current_weather['wind_speed']} m/s</span>
                     </div>
-                    <div class="detail-item">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['air_quality']}</span>
                         <span>Air Quality</span>
-                        <span class="air-quality">{current_weather['air_quality']}</span>
+                        <span style="color: {current_weather['air_quality_color']}; font-weight: 500;">{current_weather['air_quality']}</span>
                     </div>
-                    <div class="detail-item">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['sunrise']}</span>
                         <span>Sunrise</span>
                         <span>{current_weather['sunrise']}</span>
                     </div>
-                    <div class="detail-item">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>{icons['sunset']}</span>
                         <span>Sunset</span>
                         <span>{current_weather['sunset']}</span>
                     </div>
@@ -406,11 +347,17 @@ def generate_html_ui(weather_summary):
             </div>
             
             <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
-            <div class="ai-summary" style="padding: 16px; background: #f8f9fa; border-radius: 8px; margin-bottom: 24px; line-height: 1.5;">
-                {weather_summary['ai_summary']}
+            <div style="background: #f8f9fa; border-radius: 12px; margin-bottom: 24px; border: 1px solid #e0e0e0;">
+                <div style="display: flex; align-items: center; gap: 8px; padding: 16px 20px; border-bottom: 1px solid #e0e0e0; background: rgba(26, 115, 232, 0.05); border-radius: 12px 12px 0 0;">
+                    <span style="font-size: 24px;">{icons['ai']}</span>
+                    <h3 style="margin: 0; color: #1a73e8; font-size: 18px; font-weight: 500;">AI Weather Summary</h3>
+                </div>
+                <div style="padding: 20px; line-height: 1.6; white-space: pre-wrap;">
+                    {weather_summary['ai_summary']}
+                </div>
             </div>
             
-            <div class="forecast">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top: 30px;">
                 {''.join(create_forecast_card(day) for day in forecast)}
             </div>
         </div>
@@ -419,6 +366,7 @@ def generate_html_ui(weather_summary):
     '''
     
     return html
+
 
 def process_weather_request(weather_request: WeatherRequest):
     full_report = ""
