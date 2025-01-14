@@ -120,3 +120,9 @@ Contributions to the Weather Report FastAPI App are welcome. Please follow these
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## New Capabilities
+
+- Dynamic prompt adjustment based on additional inputs and analysis
+- Inclusion of additional weather data such as air quality, sunrise/sunset times, and forecast details in the prompt
+- Enhanced `summarize_weather` function to extract more detailed weather information
