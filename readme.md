@@ -25,6 +25,7 @@ Before you begin, ensure you have met the following requirements:
 - OpenWeatherMap API key
 - SendGrid API key
 - Azure OpenAI API key and endpoint
+- Open-Meteo API key
 
 ## Installation
 
@@ -47,6 +48,7 @@ Before you begin, ensure you have met the following requirements:
    AZURE_OPENAI_ENDPOINT=your_azure_openai_endpoint
    AZURE_OPENAI_API_KEY=your_azure_openai_api_key
    AZURE_OPENAI_DEPLOYMENT=your_azure_openai_deployment
+   OPEN_METEO_API_KEY=your_open_meteo_api_key
    ```
 
    Replace the placeholder values with your actual API keys and configuration.
