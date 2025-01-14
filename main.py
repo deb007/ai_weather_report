@@ -65,6 +65,19 @@ def get_weather_data(city, country):
     return current_data, forecast_data, pollution_data
 
 
+def get_additional_weather_data(lat, lon):
+    base_url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": "temperature_2m,relative_humidity_2m,precipitation,cloudcover,windspeed_10m",
+        "daily": "temperature_2m_max,temperature_2m_min,sunrise,sunset",
+        "timezone": "auto"
+    }
+    response = requests.get(base_url, params=params)
+    return response.json()
+
+
 def celsius_to_fahrenheit(celsius):
     return (celsius * 9 / 5) + 32
 
@@ -103,7 +116,7 @@ def get_weather_description(weather_id):
 
 
 def summarize_weather(
-    location, current_data, forecast_data, pollution_data, preferences, timezone
+    location, current_data, forecast_data, pollution_data, additional_data, preferences, timezone
 ):
     tz = pytz.timezone(timezone)
     current_time = (
@@ -175,6 +188,13 @@ def summarize_weather(
     aqi = pollution_data["list"][0]["main"]["aqi"]
     aqi_labels = {1: "Good", 2: "Fair", 3: "Moderate", 4: "Poor", 5: "Very Poor"}
     summary += f"Air Quality Index: {aqi_labels[aqi]}\n\n"
+
+    # Additional weather details from open-meteo.com
+    summary += "Additional weather details from open-meteo.com:\n"
+    summary += f"Max temperature: {additional_data['daily']['temperature_2m_max'][0]}°C\n"
+    summary += f"Min temperature: {additional_data['daily']['temperature_2m_min'][0]}°C\n"
+    summary += f"Sunrise: {additional_data['daily']['sunrise'][0]}\n"
+    summary += f"Sunset: {additional_data['daily']['sunset'][0]}\n"
 
     # 5-day forecast
     summary += "5-day forecast:\n"
@@ -374,11 +394,14 @@ def process_weather_request(weather_request: WeatherRequest):
         current_data, forecast_data, pollution_data = get_weather_data(
             location.city, location.country
         )
+        lat, lon = current_data["coord"]["lat"], current_data["coord"]["lon"]
+        additional_data = get_additional_weather_data(lat, lon)
         weather_summary = summarize_weather(
             location,
             current_data,
             forecast_data,
             pollution_data,
+            additional_data,
             weather_request.preferences,
             weather_request.timezone,
         )
