@@ -4,91 +4,136 @@
             "name": "Al Roker",
             "affiliation": "NBC's Today Show",
             "country": "USA",
-            "usp": "Long-time weather anchor and TV personality, known for his engaging presentation style."
+            "usp": "Long-time weather anchor and TV personality, known for his engaging presentation style.",
+            "experience_years": 40,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Carol Kirkwood",
             "affiliation": "BBC Breakfast",
             "country": "UK",
-            "usp": "Popular BBC weather presenter known for her warmth and professionalism."
+            "usp": "Popular BBC weather presenter known for her warmth and professionalism.",
+            "experience_years": 25,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Ginger Zee",
             "affiliation": "ABC News",
             "country": "USA",
-            "usp": "Chief Meteorologist known for her expertise and live coverage of extreme weather events."
+            "usp": "Chief Meteorologist known for her expertise and live coverage of extreme weather events.",
+            "experience_years": 15,
+            "specialization": "Extreme Weather",
+            "languages": ["English"]
         },
         {
             "name": "David Brown",
             "affiliation": "Seven News",
             "country": "Australia",
-            "usp": "Respected Australian meteorologist known for his detailed weather forecasts."
+            "usp": "Respected Australian meteorologist known for his detailed weather forecasts.",
+            "experience_years": 30,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Yanet García",
             "affiliation": "Televisa Monterrey",
             "country": "Mexico",
-            "usp": "Gained international fame for her engaging and energetic weather presentations."
+            "usp": "Gained international fame for her engaging and energetic weather presentations.",
+            "experience_years": 10,
+            "specialization": "General Weather",
+            "languages": ["Spanish"]
         },
         {
             "name": "Jim Cantore",
             "affiliation": "The Weather Channel",
             "country": "USA",
-            "usp": "Known for on-the-ground coverage of major weather events, especially hurricanes."
+            "usp": "Known for on-the-ground coverage of major weather events, especially hurricanes.",
+            "experience_years": 35,
+            "specialization": "Extreme Weather",
+            "languages": ["English"]
         },
         {
             "name": "Laura Tobin",
             "affiliation": "Good Morning Britain",
             "country": "UK",
-            "usp": "Popular weather presenter known for her in-depth meteorological knowledge."
+            "usp": "Popular weather presenter known for her in-depth meteorological knowledge.",
+            "experience_years": 20,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Sam Champion",
             "affiliation": "ABC’s Good Morning America",
             "country": "USA",
-            "usp": "Former weather anchor known for his approachable style and environmental advocacy."
+            "usp": "Former weather anchor known for his approachable style and environmental advocacy.",
+            "experience_years": 30,
+            "specialization": "Environmental Weather",
+            "languages": ["English"]
         },
         {
             "name": "John Coleman",
             "affiliation": "The Weather Channel",
             "country": "USA",
-            "usp": "Original weatherman on Good Morning America and co-founder of The Weather Channel."
+            "usp": "Original weatherman on Good Morning America and co-founder of The Weather Channel.",
+            "experience_years": 50,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Dallas Raines",
             "affiliation": "KABC-TV",
             "country": "USA",
-            "usp": "Charismatic meteorologist known for his lively weather presentations in Los Angeles."
+            "usp": "Charismatic meteorologist known for his lively weather presentations in Los Angeles.",
+            "experience_years": 35,
+            "specialization": "General Weather",
+            "languages": ["English"]
         },
         {
             "name": "Anand Narasimhan",
             "affiliation": "CNN-IBN",
             "country": "India",
-            "usp": "Well-known weather presenter and news anchor with a strong on-screen presence."
+            "usp": "Well-known weather presenter and news anchor with a strong on-screen presence.",
+            "experience_years": 15,
+            "specialization": "General Weather",
+            "languages": ["English", "Hindi"]
         },
         {
             "name": "Mausami Singh",
             "affiliation": "India Today Group",
             "country": "India",
-            "usp": "Journalist known for her detailed weather reports and field coverage."
+            "usp": "Journalist known for her detailed weather reports and field coverage.",
+            "experience_years": 10,
+            "specialization": "Field Reporting",
+            "languages": ["English", "Hindi"]
         },
         {
             "name": "Anant Tyagi",
             "affiliation": "Star Sports, NDTV",
             "country": "India",
-            "usp": "Known for his versatile presentation skills in both weather and sports broadcasting."
+            "usp": "Known for his versatile presentation skills in both weather and sports broadcasting.",
+            "experience_years": 12,
+            "specialization": "Sports and Weather",
+            "languages": ["English", "Hindi"]
         },
         {
             "name": "Padma Shri Dr. D. Sivananda Pai",
             "affiliation": "IMD",
             "country": "India",
-            "usp": "Renowned meteorologist recognized for his contributions to long-range weather forecasting."
+            "usp": "Renowned meteorologist recognized for his contributions to long-range weather forecasting.",
+            "experience_years": 35,
+            "specialization": "Long-range Forecasting",
+            "languages": ["English", "Hindi"]
         },
         {
             "name": "Priyanka Kishore",
             "affiliation": "DD National, All India Radio",
             "country": "India",
-            "usp": "Experienced weather presenter known for her clear and concise weather reports."
+            "usp": "Experienced weather presenter known for her clear and concise weather reports.",
+            "experience_years": 20,
+            "specialization": "General Weather",
+            "languages": ["English", "Hindi"]
         }
     ]
 }
